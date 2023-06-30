@@ -26,9 +26,14 @@ public class Teacher {
     @Column(length = 8)
     private String suffix;
     @Column(nullable = false, length = 500)
-    private String photoUrl;
+    private String photoUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/1200px-Unknown_person.jpg";
     @OneToMany(mappedBy = "teacher")
     private List<Project> projects = new ArrayList<>();
-    @ManyToMany(mappedBy = "teachers")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "teachers_subjects",
+            joinColumns = {@JoinColumn(name = "teachers_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "subjects_id", referencedColumnName = "id")}
+    )
     private List<Subject> subjects = new ArrayList<>();
 }

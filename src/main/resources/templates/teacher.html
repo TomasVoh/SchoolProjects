@@ -13,7 +13,8 @@
         <a th:href="@{/teacher/new}" class="btn btn-danger mt-3 mx-lg-2">Přidat učitele</a>
         <div class="row">
             <div class="col-sm-6" th:each="teacher : ${teachers}">
-                <div class="card bg-dark text-light my-lg-4 mx-lg-2" style="width: 16rem;">
+                <div class="card bg-dark text-light my-lg-4 mx-lg-2" style="width: 17rem">
+                    <img th:src="${teacher.photoUrl}" class="card-img-top" alt="" style="height: 16rem">
                     <div class="card-body">
                         <div th:if="${teacher.suffix}" class="card-title lead"
                              th:text="${teacher.prefix + ' ' + teacher.name + ' ' + teacher.suffix}"></div>
@@ -25,7 +26,7 @@
                                 <span th:each="subject : ${teacher.subjects}" th:text="${subject.shortcut}">
                             </span>
                         </div>
-                        <a href="" class="btn btn-primary btn-sm">Učitelé předmětu</a>
+                        <a href="" class="btn btn-primary btn-sm">Projekty</a>
                     </div>
                 </div>
             </div>

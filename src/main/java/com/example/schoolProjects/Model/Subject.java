@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Builder
 @Entity
 @Table(name = "subjects")
@@ -20,12 +21,7 @@ public class Subject {
     private String name;
     @Column(nullable = false, length = 8)
     private String shortcut;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "teachers_subjects",
-            joinColumns = @JoinColumn(name = "subjects_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "teachers_id", referencedColumnName = "id")
-    )
+    @ManyToMany(mappedBy = "subjects")
     private List<Teacher> teachers = new ArrayList<>();
     @OneToMany(mappedBy = "subject")
     private List<Project> projects = new ArrayList<>();

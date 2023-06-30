@@ -21,6 +21,10 @@ public class SubjectService {
         return projects;
     }
 
+    public Subject getById(long id) {
+        return subjectRepository.findById(id).get();
+    }
+
     public Subject createSubject(Subject subject) {
         return subjectRepository.save(subject);
     }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Nový učitel</title>
+</head>
+<body>
+    <div th:replace="home.html :: header"></div>
+    <main>
+        <div class="row align-items-center">
+            <div class="mx-auto my-2 col-10 col-md-8 col-lg-6">
+                <div class="h3">Přidání nového Učitele</div>
+                <form th:action="@{/teacher/new}" method="POST" style="height: 100vh" th:object="${teacher}">
+                    <label for="teacher-name" class="form-label">Jméno učitele:</label>
+                    <input th:field="*{name}" type="text" class="form-control" name="teacher-name" id="teacher-name">
+                    <label for="degrees" class="form-label">Přední titul učitele:</label>
+                    <input type="text" id="degrees" class="form-control" th:field="*{prefix}">
+                    <label for="photo">Adresa fotky:</label>
+                    <input type="text" id="photo" class="form-control" th:field="*{photoUrl}">
+                    <div>
+                        <div>
+                            <label for="subjects">Předměty:</label>
+                        </div>
+                        <select name="subjects" id="subjects" class="form-select-sm" th:field="*{subjects}" multiple>
+                            <option value="0" disabled>Vyberte předmět</option>
+                            <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-sm my-3">Přidat Učitele</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
