@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <title>Teachers</title>
+    <title>Učitelé</title>
 </head>
 <body>
 <div th:replace="home.html :: header"></div>
@@ -16,14 +16,14 @@
                 <div class="card bg-dark text-light my-lg-4 mx-lg-2" style="width: 17rem">
                     <img th:src="${teacher.photoUrl}" class="card-img-top" alt="" style="height: 16rem">
                     <div class="card-body">
-                        <div th:if="${teacher.suffix}" class="card-title lead"
+                        <div th:if="${teacher.suffix}" class="card-title h5"
                              th:text="${teacher.prefix + ' ' + teacher.name + ' ' + teacher.suffix}"></div>
-                        <div th:unless="${teacher.suffix}" class="card-title lead"
+                        <div th:unless="${teacher.suffix}" class="card-title h5"
                              th:text="${teacher.prefix + ' ' + teacher.name}"></div>
                         <div class="mb-2">
                             <span th:text="'Předměty: '">
                             </span>
-                                <span th:each="subject : ${teacher.subjects}" th:text="${subject.shortcut}">
+                                <span th:each="subject : ${teacher.subjects}" th:text="${subject.shortcut} + ' '">
                             </span>
                         </div>
                         <a href="" class="btn btn-primary btn-sm">Projekty</a>

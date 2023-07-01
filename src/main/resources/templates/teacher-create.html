@@ -23,7 +23,7 @@
                         <div>
                             <label for="subjects">Předměty:</label>
                         </div>
-                        <select name="subjects" id="subjects" class="form-select-sm" th:field="*{subjects}" multiple>
+                        <select name="subjects" id="subjects" class="form-control form-select" th:field="*{subjects}" multiple>
                             <option value="0" disabled>Vyberte předmět</option>
                             <option th:each="subject : ${subjects}" th:value="${subject.id}" th:text="${subject.name}"></option>
                         </select>
