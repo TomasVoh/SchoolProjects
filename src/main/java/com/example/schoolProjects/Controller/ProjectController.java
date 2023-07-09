@@ -5,16 +5,17 @@ import com.example.schoolProjects.Model.Project;
 import com.example.schoolProjects.Model.Student;
 import com.example.schoolProjects.Model.Subject;
 import com.example.schoolProjects.Model.Teacher;
-import com.example.schoolProjects.Service.ProjectService;
-import com.example.schoolProjects.Service.StudentService;
-import com.example.schoolProjects.Service.SubjectService;
-import com.example.schoolProjects.Service.TeacherService;
+import com.example.schoolProjects.Service.*;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -24,11 +25,14 @@ public class ProjectController {
     private SubjectService subjectService;
     private TeacherService teacherService;
 
-    public ProjectController(ProjectService projectService, StudentService studentService, SubjectService subjectService, TeacherService teacherService) {
+    private CsvExportService csvExportService;
+
+    public ProjectController(ProjectService projectService, StudentService studentService, SubjectService subjectService, TeacherService teacherService, CsvExportService csvExportService) {
         this.projectService = projectService;
         this.studentService = studentService;
         this.subjectService = subjectService;
         this.teacherService = teacherService;
+        this.csvExportService = csvExportService;
     }
 
     @GetMapping("/home")
@@ -55,5 +59,14 @@ public class ProjectController {
     public String createProject(@ModelAttribute("project") Project project) {
         projectService.createProject(project);
         return "redirect:/home";
+    }
+
+    @GetMapping("/project/export/csv")
+    public void getProjectsInCsv(HttpServletResponse res) throws IOException {
+        res.setContentType("text/csv");
+        String header = "Content-Disposition";
+        String title = "projects " + new Date() + ".csv";
+        res.addHeader(header, "attachment;filename=" + title);
+        csvExportService.writeProjects(res.getWriter());
     }
 }
