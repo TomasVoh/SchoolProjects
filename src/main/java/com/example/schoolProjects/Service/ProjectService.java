@@ -31,4 +31,9 @@ public class ProjectService{
     public Project createProject(Project project) {
         return projectRepository.save(project);
     }
+
+    public List<ProjectDto> getByStudentId(long id) {
+        List<Project> projects = projectRepository.findProjectByStudentId(id);
+        return projects.stream().map(ProjectMapper::mapToProjectDto).collect(Collectors.toList());
+    }
 }

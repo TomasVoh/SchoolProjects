@@ -9,10 +9,7 @@ import com.example.schoolProjects.Service.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Date;
@@ -61,12 +58,19 @@ public class ProjectController {
         return "redirect:/home";
     }
 
-    @GetMapping("/project/export/csv")
+    @RequestMapping("/project/export/csv")
     public void getProjectsInCsv(HttpServletResponse res) throws IOException {
         res.setContentType("text/csv");
         String header = "Content-Disposition";
         String title = "projects " + new Date() + ".csv";
         res.addHeader(header, "attachment;filename=" + title);
         csvExportService.writeProjects(res.getWriter());
+    }
+
+    @GetMapping("/project/student/{id}")
+    public String getProjectByStudentId(@PathVariable("id") long id, Model model) {
+        List<ProjectDto> projects = projectService.getByStudentId(id);
+        model.addAttribute("projects", projects);
+        return "home";
     }
 }
