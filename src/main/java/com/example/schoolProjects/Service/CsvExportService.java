@@ -26,7 +26,7 @@ public class CsvExportService {
             CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
             csvPrinter.printRecord("ID", "název", "student", "učitel", "předmět");
             for(ProjectDto projectDto : projects) {
-                csvPrinter.printRecord(projectDto.getId(), projectDto.getName(), projectDto.getStudent().getName(), projectDto.getTeacher().getName(), projectDto.getSubject().getName());
+                csvPrinter.printRecord(projectDto.getId(), projectDto.getName(), projectDto.getStudent().getName(), projectDto.getTeacher().getName(), projectDto.getSubject().getShortcut());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

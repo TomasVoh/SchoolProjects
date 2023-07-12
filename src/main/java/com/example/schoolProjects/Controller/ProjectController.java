@@ -21,15 +21,16 @@ public class ProjectController {
     private StudentService studentService;
     private SubjectService subjectService;
     private TeacherService teacherService;
-
     private CsvExportService csvExportService;
+    private ExcelExportService excelExportService;
 
-    public ProjectController(ProjectService projectService, StudentService studentService, SubjectService subjectService, TeacherService teacherService, CsvExportService csvExportService) {
+    public ProjectController(ProjectService projectService, StudentService studentService, SubjectService subjectService, TeacherService teacherService, CsvExportService csvExportService, ExcelExportService excelExportService) {
         this.projectService = projectService;
         this.studentService = studentService;
         this.subjectService = subjectService;
         this.teacherService = teacherService;
         this.csvExportService = csvExportService;
+        this.excelExportService = excelExportService;
     }
 
     @GetMapping("/home")
@@ -65,6 +66,14 @@ public class ProjectController {
         String title = "projects " + new Date() + ".csv";
         res.addHeader(header, "attachment;filename=" + title);
         csvExportService.writeProjects(res.getWriter());
+    }
+
+    @RequestMapping("/project/export/xlsx")
+    public void getProjectsInXlsx(HttpServletResponse res) {
+        res.setContentType("application/octet-stream");
+        String title = "projects " + new Date() + ".xlsx";
+        res.addHeader("Content-Disposition", "attachment;filename=" + title);
+        excelExportService.export(res);
     }
 
     @GetMapping("/project/student/{id}")
