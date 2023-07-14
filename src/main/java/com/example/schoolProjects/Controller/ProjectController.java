@@ -68,7 +68,7 @@ public class ProjectController {
         csvExportService.writeProjects(res.getWriter());
     }
 
-    @RequestMapping("/project/export/xlsx")
+    @GetMapping("/project/export/xlsx")
     public void getProjectsInXlsx(HttpServletResponse res) {
         res.setContentType("application/octet-stream");
         String title = "projects " + new Date() + ".xlsx";
@@ -78,7 +78,14 @@ public class ProjectController {
 
     @GetMapping("/project/student/{id}")
     public String getProjectByStudentId(@PathVariable("id") long id, Model model) {
-        List<ProjectDto> projects = projectService.getByStudentId(id);
+        List<ProjectDto> projects = projectService.getProjectByStudentId(id);
+        model.addAttribute("projects", projects);
+        return "home";
+    }
+
+    @GetMapping("/project/teacher/{id}")
+    public String getProjectByTeacherId(@PathVariable("id") long id, Model model) {
+        List<ProjectDto> projects = projectService.getProjectByTeacherId(id);
         model.addAttribute("projects", projects);
         return "home";
     }

@@ -32,8 +32,13 @@ public class ProjectService{
         return projectRepository.save(project);
     }
 
-    public List<ProjectDto> getByStudentId(long id) {
+    public List<ProjectDto> getProjectByStudentId(long id) {
         List<Project> projects = projectRepository.findProjectByStudentId(id);
+        return projects.stream().map(ProjectMapper::mapToProjectDto).collect(Collectors.toList());
+    }
+
+    public List<ProjectDto> getProjectByTeacherId(long id) {
+        List<Project> projects = projectRepository.findProjectByTeacherId(id);
         return projects.stream().map(ProjectMapper::mapToProjectDto).collect(Collectors.toList());
     }
 }

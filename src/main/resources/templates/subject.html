@@ -16,7 +16,7 @@
                     <div class="card bg-dark text-light my-lg-4 mx-lg-2" style="width: 16rem;">
                         <div class="card-body">
                             <div class="card-title h5" th:text="${subject.name + ' - ' + subject.shortcut}"></div>
-                            <a href="" class="btn btn-primary btn-sm">Učitelé předmětu</a>
+                            <a th:href="@{/teacher/subject/{id} (id=${subject.id})}" class="btn btn-primary btn-sm">Učitelé předmětu</a>
                         </div>
                     </div>
                 </div>

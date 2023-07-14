@@ -26,7 +26,7 @@
                                 <span th:each="subject : ${teacher.subjects}" th:text="${subject.shortcut} + ' '">
                             </span>
                         </div>
-                        <a href="" class="btn btn-primary btn-sm">Projekty</a>
+                        <a th:href="@{/project/teacher/{id}(id=${teacher.id})}" class="btn btn-primary btn-sm">Projekty</a>
                     </div>
                 </div>
             </div>

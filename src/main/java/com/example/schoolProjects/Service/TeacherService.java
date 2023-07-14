@@ -23,4 +23,9 @@ public class TeacherService {
     public Teacher createTeacher(Teacher teacher) {
         return teacherRepository.save(teacher);
     }
+
+    public List<Teacher> findTeachersBySubject(long id) {
+        List<Teacher> teachers = teacherRepository.findTeachersBySubjectsId(id);
+        return teachers;
+    }
 }
