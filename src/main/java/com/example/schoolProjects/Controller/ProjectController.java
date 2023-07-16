@@ -68,7 +68,7 @@ public class ProjectController {
         csvExportService.writeProjects(res.getWriter());
     }
 
-    @GetMapping("/project/export/xlsx")
+    @RequestMapping("/project/export/xlsx")
     public void getProjectsInXlsx(HttpServletResponse res) {
         res.setContentType("application/octet-stream");
         String title = "projects " + new Date() + ".xlsx";
