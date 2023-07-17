@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <title>Nový předmět</title>
+</head>
+<body>
+<div th:replace="home.html :: header"></div>
+<main>
+    <div class="row align-items-center">
+        <div class="mx-auto my-2 col-10 col-md-8 col-lg-6">
+            <form action="/register" th:object="${register}">
+                <label for="username" class="form-label"></label>
+                <input th:field="*{username}" id="username" class="form-control" name="username">
+                <label for="password" class="form-label"></label>
+                <input th:field="*{password}" id="password" class="form-control" name="password">
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>
