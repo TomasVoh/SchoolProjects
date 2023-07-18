@@ -1,10 +1,8 @@
 package com.example.schoolProjects.Controller;
 
 import com.example.schoolProjects.Dto.ProjectDto;
-import com.example.schoolProjects.Model.Project;
-import com.example.schoolProjects.Model.Student;
-import com.example.schoolProjects.Model.Subject;
-import com.example.schoolProjects.Model.Teacher;
+import com.example.schoolProjects.Model.*;
+import com.example.schoolProjects.Security.SecurityUtil;
 import com.example.schoolProjects.Service.*;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
@@ -24,18 +22,27 @@ public class ProjectController {
     private CsvExportService csvExportService;
     private ExcelExportService excelExportService;
 
-    public ProjectController(ProjectService projectService, StudentService studentService, SubjectService subjectService, TeacherService teacherService, CsvExportService csvExportService, ExcelExportService excelExportService) {
+    private UserService userService;
+
+    public ProjectController(ProjectService projectService, StudentService studentService, SubjectService subjectService, TeacherService teacherService, CsvExportService csvExportService, ExcelExportService excelExportService, UserService userService) {
         this.projectService = projectService;
         this.studentService = studentService;
         this.subjectService = subjectService;
         this.teacherService = teacherService;
         this.csvExportService = csvExportService;
         this.excelExportService = excelExportService;
+        this.userService = userService;
     }
 
     @GetMapping("/home")
     public String showProjects(Model model) {
         List<ProjectDto> projects = projectService.getAll();
+        UserEntity user = new UserEntity();
+        String username = SecurityUtil.getSessionUsername();
+        if(username != null) {
+            user = userService.getByName(username);
+            model.addAttribute("user", user);
+        }
         model.addAttribute("projects", projects);
         return "home";
     }

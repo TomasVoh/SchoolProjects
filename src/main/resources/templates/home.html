@@ -22,6 +22,8 @@
     </header>
     <main>
         <div class="container my-lg-4">
+            <div th:if="${param.logout}" class="alert alert-success">Úspěšně jste se odhlásil</div>
+            <div th:if="${user}" th:text="${user.username}" class="alert alert-success"></div>
             <a th:href="@{/project/new}" class="btn btn-danger my-3">Přidat projekt</a>
             <a th:href="@{/project/export/csv}" class="btn btn-primary my-3">Export do CSV</a>
             <a th:href="@{/project/export/xlsx}" class="btn btn-primary my-3">Export do Xlsx</a>
