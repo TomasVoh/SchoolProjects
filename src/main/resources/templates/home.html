@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <title>Domov</title>
 </head>
 <body>
@@ -16,14 +16,19 @@
                     <li class="nav-item"><a class="nav-link" href="/student">Studenti</a></li>
                     <li class="nav-item"><a class="nav-link" href="/teacher">Učitelé</a></li>
                     <li class="nav-item"><a class="nav-link" href="/subject">Předměty</a></li>
+                    <li class="nav-item dropdown">
+                        <button href="" id="dropdown-btn" class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">Uživatel</button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-btn">
+                            <li><a href="" class="dropdown-item">Profil</a></li>
+                            <li><a class="dropdown-item" href="#">Odhlásit se</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>
     </header>
     <main>
         <div class="container my-lg-4">
-            <div th:if="${param.logout}" class="alert alert-success">Úspěšně jste se odhlásil</div>
-            <div th:if="${user}" th:text="${user.username}" class="alert alert-success"></div>
             <a th:href="@{/project/new}" class="btn btn-danger my-3">Přidat projekt</a>
             <a th:href="@{/project/export/csv}" class="btn btn-primary my-3">Export do CSV</a>
             <a th:href="@{/project/export/xlsx}" class="btn btn-primary my-3">Export do Xlsx</a>
@@ -34,7 +39,7 @@
                         <th>Autor</th>
                         <th>Učitel</th>
                         <th>Předmět</th>
-                        <th></th>
+                        <th th:if="${user.isAdmin()}"></th>
                     </tr>
                 </thead>
                 <tbody class="table-dark border-2 table-bordered">
@@ -43,7 +48,7 @@
                         <td class="align-middle"  th:text="${project.student.name}"></td>
                         <td class="align-middle"  th:text="${project.teacher.prefix} + ' ' + ${project.teacher.name}"></td>
                         <td class="align-middle"  th:text="${project.subject.shortcut}"></td>
-                        <td>
+                        <td th:if="${user.isAdmin()}">
                             <a class="btn btn-primary">Edit</a>
                             <a class="btn btn-danger">Delete</a>
                         </td>

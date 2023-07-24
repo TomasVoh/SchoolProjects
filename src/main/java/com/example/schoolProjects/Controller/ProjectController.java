@@ -37,7 +37,7 @@ public class ProjectController {
     @GetMapping("/home")
     public String showProjects(Model model) {
         List<ProjectDto> projects = projectService.getAll();
-        UserEntity user = new UserEntity();
+        UserEntity user;
         String username = SecurityUtil.getSessionUsername();
         if(username != null) {
             user = userService.getByName(username);

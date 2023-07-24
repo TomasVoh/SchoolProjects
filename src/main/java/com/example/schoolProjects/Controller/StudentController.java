@@ -22,7 +22,7 @@ public class StudentController {
     public String getAll(Model model) {
         List<Student> students = studentService.getAll();
         model.addAttribute("students", students);
-        return "students";
+        return "student";
     }
 
     @GetMapping("/student/new")

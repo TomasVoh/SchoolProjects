@@ -24,7 +24,7 @@ public class Security {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/home", "/login", "/register","/webjars/**").permitAll()
+                    auth.requestMatchers("/login", "/register","/webjars/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .formLogin(login ->

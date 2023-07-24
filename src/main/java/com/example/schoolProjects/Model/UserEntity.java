@@ -30,4 +30,13 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id")
     )
     private List<Role> roles = new ArrayList<>();
+
+    public boolean isAdmin() {
+        for(Role role : roles) {
+            if(role.getName().equals("ADMIN")) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
