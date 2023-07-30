@@ -2,13 +2,17 @@ package com.example.schoolProjects.Controller;
 
 import com.example.schoolProjects.Model.Subject;
 import com.example.schoolProjects.Service.SubjectService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SubjectController {
@@ -35,6 +39,17 @@ public class SubjectController {
     @PostMapping("/subject/new")
     public String createSubject(@ModelAttribute Subject subject) {
         subjectService.createSubject(subject);
+        return "redirect:/subject";
+    }
+
+    @GetMapping("/subject/import/excel")
+    public String uploadSubjectDataForm() {
+        return "subject-import";
+    }
+
+    @PostMapping("/subject/import/excel")
+    public String uploadSubjectData(@RequestParam("file") MultipartFile file) {
+        subjectService.saveCustomersToDb(file);
         return "redirect:/subject";
     }
 }
