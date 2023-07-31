@@ -33,7 +33,7 @@ public class SubjectService {
         return subjectRepository.save(subject);
     }
 
-    public void saveCustomersToDb(MultipartFile file) {
+    public void getSubjectsFromExcel(MultipartFile file) {
         if(excelImportService.isFileValidXlsx(file)) {
             try {
                 List<Subject> subjects = excelImportService.getSubjectData(file.getInputStream());

@@ -5,9 +5,11 @@ import com.example.schoolProjects.Model.*;
 import com.example.schoolProjects.Security.SecurityUtil;
 import com.example.schoolProjects.Service.*;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
@@ -37,12 +39,8 @@ public class ProjectController {
     @GetMapping("/home")
     public String showProjects(Model model) {
         List<ProjectDto> projects = projectService.getAll();
-        UserEntity user;
-        String username = SecurityUtil.getSessionUsername();
-        if(username != null) {
-            user = userService.getByName(username);
-            model.addAttribute("user", user);
-        }
+        UserEntity user = userService.getUser();
+        model.addAttribute("user", user);
         model.addAttribute("projects", projects);
         return "home";
     }
@@ -86,6 +84,8 @@ public class ProjectController {
     @GetMapping("/project/student/{id}")
     public String getProjectByStudentId(@PathVariable("id") long id, Model model) {
         List<ProjectDto> projects = projectService.getProjectByStudentId(id);
+        UserEntity user = userService.getUser();
+        model.addAttribute("user", user);
         model.addAttribute("projects", projects);
         return "home";
     }
@@ -93,7 +93,15 @@ public class ProjectController {
     @GetMapping("/project/teacher/{id}")
     public String getProjectByTeacherId(@PathVariable("id") long id, Model model) {
         List<ProjectDto> projects = projectService.getProjectByTeacherId(id);
+        UserEntity user = userService.getUser();
+        model.addAttribute("user", user);
         model.addAttribute("projects", projects);
         return "home";
+    }
+
+    @PostMapping("/project/import/excel")
+    public ResponseEntity<String> getProjectsFromExcel(@RequestParam("file")MultipartFile file) {
+        projectService.createProjectFromExcel(file);
+        return ResponseEntity.ok("Data jsou v databázi");
     }
 }

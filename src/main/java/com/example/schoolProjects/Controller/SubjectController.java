@@ -49,7 +49,7 @@ public class SubjectController {
 
     @PostMapping("/subject/import/excel")
     public String uploadSubjectData(@RequestParam("file") MultipartFile file) {
-        subjectService.saveCustomersToDb(file);
+        subjectService.getSubjectsFromExcel(file);
         return "redirect:/subject";
     }
 }

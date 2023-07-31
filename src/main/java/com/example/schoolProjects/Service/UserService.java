@@ -5,6 +5,7 @@ import com.example.schoolProjects.Model.Role;
 import com.example.schoolProjects.Model.UserEntity;
 import com.example.schoolProjects.Repository.RoleRepository;
 import com.example.schoolProjects.Repository.UserEntityRepository;
+import com.example.schoolProjects.Security.SecurityUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,15 @@ public class UserService {
     public UserEntity getByName(String username) {
         UserEntity userEntity = userEntityRepository.findFirstByUsername(username);
         return userEntity;
+    }
+
+    public UserEntity getUser() {
+        UserEntity user;
+        String username = SecurityUtil.getSessionUsername();
+        if(username != null) {
+            user = getByName(username);
+            return user;
+        }
+        return null;
     }
 }

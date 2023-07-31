@@ -6,16 +6,20 @@ import com.example.schoolProjects.Mapper.ProjectMapper;
 import com.example.schoolProjects.Model.Project;
 import com.example.schoolProjects.Repository.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class ProjectService{
     private ProjectRepository projectRepository;
+    private ExcelImportService excelImportService;
 
-    public ProjectService(ProjectRepository projectRepository) {
+    public ProjectService(ProjectRepository projectRepository, ExcelImportService excelImportService) {
         this.projectRepository = projectRepository;
+        this.excelImportService = excelImportService;
     }
 
     public List<ProjectDto> getAll() {
@@ -40,5 +44,17 @@ public class ProjectService{
     public List<ProjectDto> getProjectByTeacherId(long id) {
         List<Project> projects = projectRepository.findProjectByTeacherId(id);
         return projects.stream().map(ProjectMapper::mapToProjectDto).collect(Collectors.toList());
+    }
+
+    public void createProjectFromExcel(MultipartFile file) {
+        if(excelImportService.isFileValidXlsx(file)) {
+            try {
+                List<Project> projects = excelImportService.getProjectData(file.getInputStream());
+                projectRepository.saveAll(projects);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
     }
 }
