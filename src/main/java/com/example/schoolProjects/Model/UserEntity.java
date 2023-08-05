@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,9 @@ public class UserEntity {
     private List<Role> roles = new ArrayList<>();
 
     public boolean isAdmin() {
-        for(Role role : roles) {
+        Iterator<Role> roleIterator = roles.iterator();
+        while (roleIterator.hasNext()) {
+            Role role = roleIterator.next();
             if(role.getName().equals("ADMIN")) {
                 return true;
             }

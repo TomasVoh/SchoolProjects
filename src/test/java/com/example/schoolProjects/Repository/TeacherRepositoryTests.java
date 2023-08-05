@@ -2,9 +2,6 @@ package com.example.schoolProjects.Repository;
 
 import com.example.schoolProjects.Model.Subject;
 import com.example.schoolProjects.Model.Teacher;
-import jakarta.persistence.GeneratedValue;
-import lombok.Builder;
-import org.hibernate.id.factory.IdentifierGeneratorFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

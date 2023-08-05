@@ -29,7 +29,13 @@
     </header>
     <main>
         <div class="container my-lg-4">
+            <div th:if="${param.delete}" class="alert alert-success">Projekt byl smazán</div>
+            <form th:action="@{/project/search}" class="input-group">
+                <input name="name" type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                <button type="submit" class="btn btn-outline-primary">search</button>
+            </form>
             <a th:href="@{/project/new}" class="btn btn-danger my-3">Přidat projekt</a>
+            <a href="project/import/excel" class="btn btn-danger">Import z Xlsx</a>
             <a th:href="@{/project/export/csv}" class="btn btn-primary my-3">Export do CSV</a>
             <a th:href="@{/project/export/xlsx}" class="btn btn-primary my-3">Export do Xlsx</a>
             <table class="table">
@@ -47,10 +53,13 @@
                         <td class="align-middle" th:text="${project.name}"></td>
                         <td class="align-middle"  th:text="${project.student.name}"></td>
                         <td class="align-middle"  th:text="${project.teacher.prefix} + ' ' + ${project.teacher.name}"></td>
-                        <td class="align-middle"  th:text="${project.subject.shortcut}"></td>
+                        <td class="align-content-between align-middle"  th:text="${project.subject.shortcut}"></td>
                         <td th:if="${user.isAdmin()}">
                             <a class="btn btn-primary">Edit</a>
-                            <a class="btn btn-danger">Delete</a>
+                            <form class="my-2" th:action="@{project/delete}" method="post">
+                                <input type="hidden" name="id" th:value="${project.id}">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
                         </td>
                     </tr>
                 </tbody>

@@ -23,7 +23,6 @@ public class ProjectController {
     private TeacherService teacherService;
     private CsvExportService csvExportService;
     private ExcelExportService excelExportService;
-
     private UserService userService;
 
     public ProjectController(ProjectService projectService, StudentService studentService, SubjectService subjectService, TeacherService teacherService, CsvExportService csvExportService, ExcelExportService excelExportService, UserService userService) {
@@ -99,9 +98,29 @@ public class ProjectController {
         return "home";
     }
 
+    @GetMapping("/project/import/excel")
+    public String getProjectsFromExcel() {
+        return "project-import";
+    }
+
     @PostMapping("/project/import/excel")
-    public ResponseEntity<String> getProjectsFromExcel(@RequestParam("file")MultipartFile file) {
+    public String getProjectsFromExcel(@RequestParam("file") MultipartFile file) {
         projectService.createProjectFromExcel(file);
-        return ResponseEntity.ok("Data jsou v databázi");
+        return "redirect:/home";
+    }
+
+    @GetMapping("/project/search")
+    public String getProjectsBySearch(@RequestParam("name") String query, Model model) {
+        List<ProjectDto> projectDtos = projectService.getProjectsBySearch(query);
+        UserEntity user = userService.getUser();
+        model.addAttribute("user", user);
+        model.addAttribute("projects", projectDtos);
+        return "home";
+    }
+
+    @PostMapping("/project/delete")
+    public String deleteProject(@RequestParam("id") long id) {
+        projectService.deleteProject(id);
+        return "redirect:/home?delete=true";
     }
 }

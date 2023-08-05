@@ -57,4 +57,13 @@ public class ProjectService{
 
         }
     }
+
+    public List<ProjectDto> getProjectsBySearch(String search) {
+        List<Project> projects = projectRepository.findProjectsBySearch(search);
+        return projects.stream().map(ProjectMapper::mapToProjectDto).collect(Collectors.toList());
+    }
+
+    public void deleteProject(long id) {
+        projectRepository.deleteById(id);
+    }
 }
