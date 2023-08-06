@@ -19,8 +19,8 @@
                     <li class="nav-item dropdown">
                         <button href="" id="dropdown-btn" class="nav-link dropdown-toggle" type="button" data-bs-toggle="dropdown">Uživatel</button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-btn">
-                            <li><a href="" class="dropdown-item">Profil</a></li>
-                            <li><a class="dropdown-item" href="#">Odhlásit se</a></li>
+                            <li><a th:href="@{/user/details}" class="dropdown-item">Profil</a></li>
+                            <li><a class="dropdown-item" href="/logout">Odhlásit se</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -53,7 +53,7 @@
                         <td class="align-middle" th:text="${project.name}"></td>
                         <td class="align-middle"  th:text="${project.student.name}"></td>
                         <td class="align-middle"  th:text="${project.teacher.prefix} + ' ' + ${project.teacher.name}"></td>
-                        <td class="align-content-between align-middle"  th:text="${project.subject.shortcut}"></td>
+                        <td class="text-center align-middle"  th:text="${project.subject.shortcut}"></td>
                         <td th:if="${user.isAdmin()}">
                             <a class="btn btn-primary">Edit</a>
                             <form class="my-2" th:action="@{project/delete}" method="post">

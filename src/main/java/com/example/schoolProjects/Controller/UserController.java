@@ -1,6 +1,9 @@
 package com.example.schoolProjects.Controller;
 
 import com.example.schoolProjects.Dto.RegistrationDto;
+import com.example.schoolProjects.Model.UserEntity;
+import com.example.schoolProjects.Security.Security;
+import com.example.schoolProjects.Security.SecurityUtil;
 import com.example.schoolProjects.Service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,5 +36,12 @@ public class UserController {
     @GetMapping("/login")
     public String loginForm() {
         return "/login";
+    }
+
+    @GetMapping("/user/details")
+    public String userDetails(Model model) {
+        UserEntity user = userService.getUser();
+        model.addAttribute("user", user);
+        return "user-details";
     }
 }

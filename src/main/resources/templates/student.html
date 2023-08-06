@@ -21,6 +21,11 @@
                     </div>
                 </div>
             </div>
+            <nav aria-label="Page navigation example" >
+                <ul class="pagination">
+                    <li class="page-item" th:each="i, status : ${pages}"><a th:text="${status.count}" class="page-link" th:href="@{${'/student?pageNum=' + status.index + '&pageSize=10'}}"></a></li>
+                </ul>
+            </nav>
         </div>
     </main>
 </body>

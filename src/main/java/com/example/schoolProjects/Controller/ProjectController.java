@@ -47,7 +47,7 @@ public class ProjectController {
     @GetMapping("/project/new")
     public String createProjectForm(Model model) {
         Project project = new Project();
-        List<Student> students = studentService.getAll();
+        List<Student> students = studentService.getAllStudents();
         List<Subject> subjects = subjectService.getAll();
         List<Teacher> teachers = teacherService.getAll();
         model.addAttribute("project", project);
